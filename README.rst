@@ -1,10 +1,10 @@
 django-settings
 ===============
 
-Simple django reusable application for storing project settings in database.
+Simple django reusable application for storing global project settings in database.
 
-By project settings I mean things like admin mail, some default values etc.
-Values are validated depending their type
+By project settings I mean things like admin mail, some default values like default_post_limit etc.
+Values are validated depending their type.
 
 
 API
