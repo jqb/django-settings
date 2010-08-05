@@ -1,7 +1,5 @@
 django-settings
 ===============
-(developement version, unstable)
-
 
 Simple django reusable application for storing project settings in database.
 

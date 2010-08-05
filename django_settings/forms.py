@@ -58,10 +58,3 @@ class SettingForm(forms.ModelForm):
         instance.setting_id = setting_object.id
         instance.save()
         return instance
-
-
-
-class UserSettingForm(SettingForm):
-    class Meta:
-        model = models.UserSetting
-        fields = ('user', 'setting_type', 'name')
