@@ -70,4 +70,4 @@ class Setting(models.Model):
     setting_id = models.PositiveIntegerField()
     setting_object = generic.GenericForeignKey('setting_type', 'setting_id')
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
