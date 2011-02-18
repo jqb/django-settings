@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.db.models import signals
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
@@ -19,4 +18,15 @@ def initialize_data(sender, **kwargs):
         if not models.Setting.objects.value_object_exists(name):
             models.Setting.objects.set_value(name, SettingClass, value)
 
-signals.post_syncdb.connect(initialize_data, sender=models)
+
+def post_migrate_listener(sender, **kwargs):
+    if kwargs.get('app') == 'django_settings':
+        initialize_data(sender, **kwargs)
+
+
+try:
+    from south.signals import post_migrate
+    post_migrate.connect(post_migrate_listener)
+except ImportError:
+    from django.db.models.signals import post_syncdb
+    post_syncdb.connect(initialize_data, sender=models)
