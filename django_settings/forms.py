@@ -12,7 +12,7 @@ from django_settings import models
 class SettingForm(forms.ModelForm):
     class Meta:
         model = models.Setting
-        fields = ('setting_type', 'name')
+        fields = ('setting_type', 'name', 'description')
 
     value = forms.CharField()
 
