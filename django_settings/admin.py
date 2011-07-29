@@ -5,11 +5,9 @@ from django.contrib.contenttypes import generic
 from django_settings import models, forms
 
 
-
 def get_setting_value(obj):
     return obj.setting_object.value
 get_setting_value.short_description = _('Value')
-
 
 
 class SettingAdmin(admin.ModelAdmin):
