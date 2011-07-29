@@ -7,7 +7,6 @@ from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
 
-
 class BaseSetting(models.Model):
     class Meta:
         abstract = True
@@ -16,20 +15,16 @@ class BaseSetting(models.Model):
         return u'%s' % self.value
 
 
-
 class String(BaseSetting):
     value = models.CharField(max_length=254)
-
 
 
 class Integer(BaseSetting):
     value = models.IntegerField()
 
 
-
 class PositiveInteger(BaseSetting):
     value = models.PositiveIntegerField()
-
 
 
 class SettingManager(models.Manager):
@@ -39,11 +34,9 @@ class SettingManager(models.Manager):
                 return kw.get('default')
         return self.get(name=name).setting_object.value
 
-
     def value_object_exists(self, name):
         queryset = self.filter(name=name)
         return queryset.exists() and queryset[0].setting_object
-
 
     def set_value(self, name, SettingClass, value):
         setting = Setting(name=name)
@@ -56,7 +49,6 @@ class SettingManager(models.Manager):
         setting.setting_object = SettingClass.objects.create(value=value)
         setting.save()
         return setting
-
 
 
 class Setting(models.Model):
