@@ -16,7 +16,7 @@ setup(
     package_dir={
         'django_settings': 'django_settings'},
     classifiers=[
-        'Development Status :: 1 - Beta',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
@@ -25,4 +25,4 @@ setup(
         'Framework :: Django',
     ],
     zip_safe=False,
-    )
+)
