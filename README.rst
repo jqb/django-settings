@@ -50,8 +50,8 @@ Now you can manipulate setting via your admin interface.
 Just install the application and put it in your INSTALL_APPS.
 
 
-Istallation
------------
+Installation
+------------
 
 It's available on Pypi:
 
