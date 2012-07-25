@@ -13,10 +13,10 @@ API
 ::
 
   from django_settings import models
-  
+
   # getting values
   models.Setting.objects.get_value('post_limit')
-  
+
   # setting values
   models.Setting.objects.set_value('admin_email', models.String, 'admin@admin.com')
 
@@ -36,7 +36,7 @@ There is ability to setup some defaults via project settings.py file:
 
 
 
-Settings types 
+Settings types
 --------------
 
 Currently there are three setting types supported: Integer, String, PositiveInteger
@@ -48,3 +48,13 @@ Admin
 
 Now you can manipulate setting via your admin interface.
 Just install the application and put it in your INSTALL_APPS.
+
+
+Istallation
+-----------
+
+It's available on Pypi:
+
+::
+
+   $> pip install django-settings
