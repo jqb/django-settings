@@ -1,28 +1,30 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.db.models import Q
 from django.forms.models import modelform_factory
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from django_settings import models
+from . import api as djsettings
 
 
 class SettingForm(forms.ModelForm):
     class Meta:
-        model = models.Setting
+        model = djsettings.Setting
         fields = ('setting_type', 'name')
 
     value = forms.CharField()
 
     def __init__(self, *a, **kw):
         forms.ModelForm.__init__(self, *a, **kw)
-        self.fields['setting_type'].queryset = ContentType.objects.filter(
-            Q(name='string') | Q(name='integer') | Q(name='positive integer'))
+        self.fields['setting_type'].queryset = djsettings.data.contenttypes_queryset()
 
         instance = kw.get('instance')
         if instance:
             self.fields['value'].initial = getattr(instance.setting_object, 'value', '')
+
+        self._change_callback = kw.get(
+            'change_callback',
+            djsettings.DataAPI.setting_changed  # classmethod
+        )
 
     def clean(self):
         cd = self.cleaned_data
@@ -51,6 +53,7 @@ class SettingForm(forms.ModelForm):
 
         kwargs['commit'] = False
         instance = forms.ModelForm.save(self, *args, **kwargs)
-        instance.setting_id = setting_object.id
+        instance.setting_object = setting_object
         instance.save()
+        self._change_callback(instance)
         return instance
