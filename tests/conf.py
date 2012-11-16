@@ -10,7 +10,7 @@ DATABASES = {
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
 
-    'djsettings',
+    'django_settings',
 
     'tests.moduleregistry_testapp',
 )

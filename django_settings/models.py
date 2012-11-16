@@ -59,6 +59,7 @@ class Setting(models.Model):
     name = models.CharField(max_length=255)
 
 
+
 # Extentions #######################################################
 from .moduleregistry import new_registry
 
@@ -67,4 +68,35 @@ registry = new_registry(__name__)
 
 # cleanup
 del new_registry
+# end ###############################################################
 
+
+
+# Builtin settings models
+class Email(Model):
+    value = models.EmailField()
+    class Meta:
+        abstract = True
+registry.register(Email)
+
+
+class String(Model):
+    value = models.CharField(max_length=254)
+    class Meta:
+        abstract = True
+registry.register(String)
+
+
+class Integer(Model):
+    value = models.IntegerField()
+    class Meta:
+        abstract = True
+registry.register(Integer)
+
+
+class PositiveInteger(Model):
+    value = models.PositiveIntegerField()
+    class Meta:
+        abstract = True
+registry.register(PositiveInteger)
+# end ###################

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-import djsettings
+import django_settings
 
 
-class String(djsettings.Model):
+class MyString(django_settings.db.Model):
     value = models.CharField(max_length=512)
 
     class Meta:
@@ -12,5 +12,5 @@ class String(djsettings.Model):
 
 def register():
     from .models import registry
-    registry.register(String)
+    registry.register(MyString)
 

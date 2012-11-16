@@ -33,9 +33,6 @@ Usage::
 # system
 import sys
 
-# framework
-from django.utils.datastructures import SortedDict
-
 
 def subclass(class_=None, module=None):
     attrs = {
@@ -50,7 +47,7 @@ class RegisterError(Exception):
 
 class ModuleRegistry(object):
     def __init__(self, module):
-        self.elements = SortedDict()
+        self.elements = {}
         self.module = module
 
     def _subclass(self, model_class):

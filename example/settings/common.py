@@ -23,7 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'debug_toolbar',
-    'djsettings',
+    'django_settings',
 
 ) + apps_from('app')
 

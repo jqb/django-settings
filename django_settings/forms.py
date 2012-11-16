@@ -3,19 +3,19 @@ from django import forms
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext_lazy as _
 
-from . import api as djsettings
+from . import api as django_settings
 
 
 class SettingForm(forms.ModelForm):
     class Meta:
-        model = djsettings.Setting
+        model = django_settings.db.Setting
         fields = ('setting_type', 'name')
 
     value = forms.CharField()
 
     def __init__(self, *a, **kw):
         forms.ModelForm.__init__(self, *a, **kw)
-        self.fields['setting_type'].queryset = djsettings.data.contenttypes_queryset()
+        self.fields['setting_type'].queryset = django_settings.data.contenttypes_queryset()
 
         instance = kw.get('instance')
         if instance:
@@ -23,7 +23,7 @@ class SettingForm(forms.ModelForm):
 
         self._change_callback = kw.get(
             'change_callback',
-            djsettings.DataAPI.setting_changed  # classmethod
+            django_settings.DataAPI.setting_changed  # classmethod
         )
 
     def clean(self):

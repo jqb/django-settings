@@ -8,18 +8,20 @@ a set of tools that makes method caching a little more flexible that simple
 
 XXX: the whole mechanism should be fixed as now it's too complicated to explain
 """
-from django.core.cache import cache
 
 
 class MethodProxy(object):
-    def __init__(self, instance, method, cache_client=None):
-        self.key_prefix = 'djsettings'
+    def __init__(self, instance, method):
+        self.key_prefix = 'django_settings'
         self.instance = instance
         self.method = method  # accually it's NOT bounded s it's a function!
-        self.cache = cache_client or cache
 
         # NOTE: it's proxy, so let's add at least some basic func properties
         self.func_name = self.method.func_name
+
+    @property
+    def cache(self):
+        return self.instance.cache  # ATTENTION: this may raise django ImportError
 
     def origin_method(self, *args, **kwargs):
         return self.method(self.instance, *args, **kwargs)
@@ -69,7 +71,7 @@ class cache_method(object):
     def __get__(self, instance, instance_type=None):
         proxy = getattr(instance, self.method_proxy_name, None)
         if proxy is None:
-            proxy = self.method_proxy_class(instance, self.method, instance.cache)
+            proxy = self.method_proxy_class(instance, self.method)
             setattr(instance, self.method_proxy_name, proxy)
         return proxy
 

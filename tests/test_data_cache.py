@@ -3,10 +3,7 @@
 from . import DBTestCase, n
 
 # tested app
-import djsettings
-
-# test app imports
-from moduleregistry_testapp import settingsmodels, models
+import django_settings
 
 
 def assure_db_queries(function, num):
@@ -25,13 +22,14 @@ def assure_db_queries(function, num):
 
 class DataCachingTest(DBTestCase):
     def before_database_setup(self):
-        settingsmodels.register()
+        from moduleregistry_testapp import settingsmodels
 
     def teardown(self):
+        from moduleregistry_testapp import models
         models.registry.unregister_all()
 
     def test_contenttypes_names_should_be_cached(self):
-        djsettings.data.clear_cache()
-        # NOTE: it clears ALL the cache not only related to djsettings
+        django_settings.data.clear_cache()
+        # NOTE: it clears ALL the cache not only related to django_settings
 
-        assure_db_queries(lambda: djsettings.data.contenttypes_names(), 0)
+        assure_db_queries(lambda: django_settings.data.contenttypes_names(), 0)
