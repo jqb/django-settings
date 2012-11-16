@@ -1,20 +1,20 @@
 django-settings
 ===============
 
-Current version: 1.3 beta
+Current version: 1.2 beta
 
 
 Django reusable application for storing global project settings in database.
 
 By project settings I mean things like admin mail, some default values like
 default_post_limit etc. Values are validated depending their type.
-Begining with ver 1.3 you can register your own settings values.
+Begining with ver 1.2 you can register your own settings values.
 
 
 API
 ---
 
-IMPORTANT: changed in version 1.3, old api still works but caching do not work
+IMPORTANT: changed in version 1.2, old api still works but caching do not work
 with it.
 
 ::
@@ -123,5 +123,5 @@ Changelog
     2) new api with caching mechanism introduced
 
     Some tests has been added for core functionality.
-    It's possible to use old API but there's no cache.
+
 
