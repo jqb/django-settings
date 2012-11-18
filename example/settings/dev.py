@@ -5,3 +5,4 @@ DATABASES = {
         'NAME': projectpath('dev.db'),
     }
 }
+

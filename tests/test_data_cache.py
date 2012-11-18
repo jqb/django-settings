@@ -22,6 +22,7 @@ def assure_db_queries(function, num):
 
 class DataCachingTest(DBTestCase):
     def before_database_setup(self):
+        django_settings.data.clear_cache()
         from moduleregistry_testapp import settingsmodels
 
     def teardown(self):
@@ -33,3 +34,14 @@ class DataCachingTest(DBTestCase):
         # NOTE: it clears ALL the cache not only related to django_settings
 
         assure_db_queries(lambda: django_settings.data.contenttypes_names(), 0)
+
+    def test_get_should_accept_default_param(self):
+        result = django_settings.get('unexisting_value', default="DefaultValue")
+        n.assert_equal(result, "DefaultValue")
+
+    def test_get_should_raise_DoesNotExist_if_theres_no_such_setting(self):
+        n.assert_raises(
+            django_settings.db.Setting.DoesNotExist,
+            lambda: django_settings.get('unexisting_value'),
+        )
+

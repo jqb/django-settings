@@ -1,28 +1,33 @@
 django-settings
 ===============
 
-Current version: 1.2 beta
+Current version: 1.3 beta
 
 
 Django reusable application for storing global project settings in database.
 
 By project settings I mean things like admin mail, some default values like
 default_post_limit etc. Values are validated depending their type.
-Begining with ver 1.2 you can register your own settings values.
+Begining with ver 1.3 you can register your own settings values.
 
 
 API
 ---
 
-IMPORTANT: changed in version 1.2, old api still works but caching do not work
-with it.
+IMPORTANT: changed in version 1.3, old api still works but caching do not work with it.
 
 ::
 
   import django_settings
 
   # getting values
+  # this will raise django_settings.models.Setting.DoesNotExist
+  # exception if value not exists
+  # if value is not in cache it will be cached
   django_settings.get('post_limit')
+
+  # if you not sure value exists you can pass "default" parameter,
+  # at this point default is NOT cached
   django_settings.get('post_limit', default=10)
 
   # set values - cache is updated for "get" and "exists" method
@@ -87,12 +92,8 @@ Remember to define model as abstract, this is important because of how django
 treats model classes.
 
 
-When ``register`` function will be invoked all your models will be available in
-``django_settings.models`` module, so django can treat them as regular models.
-
-
 There is ability to setup some defaults via project settings.py file.
-Those settings will be setup ONLY if they not exists in db yet.
+Those settings will be setup ONLY if they not already exists in db.
 
 ::
 
@@ -117,11 +118,33 @@ You can manipulate setting via your admin interface.
 Changelog
 ---------
 
-1.2 beta - two big things has been changed.
+1.3 beta - several improvements has been made since ver 1.0
 
-    1) from now you can extend settings with your own types
-    2) new api with caching mechanism introduced
+    1) setting name need to be unique now (backward incompatiblity)
+    2) from now you can extend settings with your own types using
+       `django_settings.register` function
+    3) new api with caching mechanism introduced
+    4) admin interface has been improved, action to clear cache
+       keys only used by the package added
 
     Some tests has been added for core functionality.
 
+
+Backward incompatible changes
+
+  `django_settings.models.Setting` name need to be unique now, however
+  ver 1.3 still allows it to not to be unique. Just set `DJANGO_SETTINGS_UNIQUE_NAMES`
+  application setting to False (True is by default).
+
+
+Author
+------
+
+  * Kuba Janoszek (kuba.janoszek@gmail.com)
+
+
+Contributors
+------------
+
+  * `Trey Hunner <https://github.com/treyhunner/>`_
 

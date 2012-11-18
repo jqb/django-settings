@@ -33,12 +33,12 @@ class MethodProxy(object):
         return ":".join(["%s:%s" % (k,v) for k, v in kwargs.items()])
 
     def _cache_key_for_method(self, method_name, *args, **kwargs):
-        key = "%s:%s:%s:%s" % (
+        key = ":".join((
             self.key_prefix,
             method_name,
             self._args_to_key(args),
             self._kwargs_to_key(kwargs),
-        )
+        ))
         return key
 
     def _cache_key(self, *args, **kwargs):

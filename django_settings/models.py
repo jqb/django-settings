@@ -5,6 +5,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 
+# app local
+from . import conf
+
 
 class Model(models.Model):  # Base class for db setting
     class Meta:
@@ -56,7 +59,7 @@ class Setting(models.Model):
     setting_id = models.PositiveIntegerField()
     setting_object = generic.GenericForeignKey('setting_type', 'setting_id')
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=conf.DJANGO_SETTINGS_UNIQUE_NAMES)
 
 
 

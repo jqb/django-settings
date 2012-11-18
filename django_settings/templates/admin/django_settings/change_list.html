@@ -1,0 +1,26 @@
+{% extends "admin/change_list.html" %}
+{% load i18n settings_admin_urls %}
+
+{% block object-tools %}
+{% if has_add_permission %}
+<div class="object-tools">
+  <select class="select-content-type">
+    <option>
+      -- {% blocktrans with cl.opts.verbose_name|lower as name %}Create new {{ name }}{% endblocktrans %} --
+    </option>
+    {% for type_name in cl.available_settings_models %}
+    <option data-url="{{ cl|add_url_for_setting_type:type_name }}">
+      {{ type_name }}
+    </option>
+    {% endfor %}
+  </select>
+  <script type="text/javascript">
+    (function($) {
+        $('select.select-content-type').change(function() {
+            window.location = $('select.select-content-type option:selected').attr('data-url');
+        });
+    })(django.jQuery);
+  </script>
+</div>
+{% endif %}
+{% endblock %}

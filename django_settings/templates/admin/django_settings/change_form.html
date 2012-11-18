@@ -1,0 +1,10 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block content_title %}
+<h1>
+{% if add %}{% trans "Add" %}{% endif %}
+{% if change %}{% trans "Change" %}{% endif %}
+{{ setting_model_name }}
+</h1>
+{% endblock %}

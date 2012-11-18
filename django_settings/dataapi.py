@@ -14,8 +14,8 @@ django = lazyimport({
     'Q'           : 'django.db.models',
 })
 db = lazyimport({
-    'registry': 'django_settings.models',
-    'Setting': 'django_settings.models',
+    'registry' : 'django_settings.models',
+    'Setting'  : 'django_settings.models',
 })
 
 
@@ -29,9 +29,21 @@ class dataapi_set_method_proxy(MethodProxy):
         return cached_value
 
 
+NIL = type('NIL', (object,), {})()
+
+
 class dataapi_get_method_proxy(MethodProxy):
     def _cache_key(self, name): # should accept only "name"
         return self._cache_key_for_method('get', name)
+
+    def __call__(self, name, **kwargs):
+        default = kwargs.pop('default', NIL)
+        try:
+            return super(dataapi_get_method_proxy, self).__call__(name, **kwargs)
+        except db.Setting.DoesNotExist:
+            if default != NIL:
+                return default
+            raise
 
 
 class DataAPIMetaclass(type):
@@ -70,6 +82,9 @@ class DataAPI(object):
         for name in self.contenttypes_names():
             query = query | django.Q(name=name)
         return django.ContentType.objects.filter(query)
+
+    def model_for_name(self, name):
+        return db.registry[name]
 
     def type_names(self):
         return db.registry.names()
