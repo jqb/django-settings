@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-VERSION = (1, 0, 0, 'beta')
+VERSION = '1.3-beta'
 
-__version__ = ".".join(map(str, VERSION[0:3])) + "".join(VERSION[3:])
-__author__ = 'Kuba Janoszek'
+__version__ = VERSION
+__author__ = "Kuba Janoszek"
+
+# module public API
+from .api import *
+

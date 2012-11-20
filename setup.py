@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
+from setuptools import setup, find_packages
 
-from distutils.core import setup
 import django_settings
 
 
@@ -12,9 +12,8 @@ setup(
     author='Kuba Janoszek',
     author_email='kuba.janoszek@gmail.com',
     url='http://github.com/jqb/django-settings',
-    packages=['django_settings'],
-    package_dir={
-        'django_settings': 'django_settings'},
+    packages=find_packages(exclude=['example*', 'tests*']),
+    include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -26,3 +25,9 @@ setup(
     ],
     zip_safe=False,
 )
+
+
+# Usage of setup.py:
+# $> python setup.py register             # registering package on PYPI
+# $> python setup.py build sdist upload   # build, make source dist and upload to PYPI
+

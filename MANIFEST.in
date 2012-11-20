@@ -1,0 +1,9 @@
+graft .
+include setup.py
+include README.rst
+include LICENSE
+recursive-include django_settings/templates *
+recursive-include django_settings/templates/admin *
+recursive-include django_settings/templates/admin/django_settings *
+exclude example*
+exclude tests*

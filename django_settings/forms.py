@@ -1,43 +1,32 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.db.models import Q
 from django.forms.models import modelform_factory
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from django_settings import models
+from . import api as django_settings
 
 
 class SettingForm(forms.ModelForm):
     class Meta:
-        model = models.Setting
-        fields = ('setting_type', 'name')
+        model = django_settings.db.Setting
+        fields = ('name', 'value')
+
+    # this might be predefined with admin interface
+    setting_model = None
 
     value = forms.CharField()
 
-    def __init__(self, *a, **kw):
-        forms.ModelForm.__init__(self, *a, **kw)
-        self.fields['setting_type'].queryset = ContentType.objects.filter(
-            Q(name='string') | Q(name='integer') | Q(name='positive integer'))
+    def __init__(self, *args, **kwargs):
+        super(SettingForm, self).__init__(*args, **kwargs)
+        self.fields['value'] = self.setting_model._meta.get_field('value').formfield()
 
-        instance = kw.get('instance')
+        instance = kwargs.get('instance')
         if instance:
             self.fields['value'].initial = getattr(instance.setting_object, 'value', '')
 
-    def clean(self):
-        cd = self.cleaned_data
-        SettingClass = cd['setting_type'].model_class()
-        SettingClassForm = modelform_factory(SettingClass)
-
-        value = cd.get('value')
-        if not value:
-            self._errors['value'] = self.error_class(['Value field cannot be empty.'])
-        else:
-            setting_form = SettingClassForm({'value': cd['value']})
-            if not setting_form.is_valid():
-                del cd['value']
-                self._errors['value'] = self.error_class(['Value is not valid.'])
-        return cd
+    def setting_changed(self, instance):
+        django_settings.DataAPI.setting_changed(instance)
+        return instance
 
     def save(self, *args, **kwargs):
         cd = self.clean()
@@ -46,11 +35,11 @@ class SettingForm(forms.ModelForm):
             setting_object = self.instance.setting_object
             setting_object.delete()
 
-        SettingClass = cd['setting_type'].model_class()
-        setting_object = SettingClass.objects.create(value=cd['value'])
+        setting_object = self.setting_model.objects.create(value=cd['value'])
 
-        kwargs['commit'] = False
+        kwargs.update(commit=False)
         instance = forms.ModelForm.save(self, *args, **kwargs)
-        instance.setting_id = setting_object.id
+        instance.setting_object = setting_object
         instance.save()
-        return instance
+        return self.setting_changed(instance)
+

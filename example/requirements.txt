@@ -1,0 +1,4 @@
+django==1.4
+django-debug-toolbar
+-e git+git://github.com/jqb/django-staticserve.git#egg=staticserve
+django-settings
