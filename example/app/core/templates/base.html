@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    {% block css_include %}
+		<!-- just an example that you might keep in apps.base application
+				<link rel="stylesheet" href="{% get_static_prefix %}core/lib/bootstrap/init.css" type="text/css" media="screen" /> -->
+		{% endblock %}
+		{% block js_include %}
+		<!-- just an example that you might keep in apps.base application
+				 <script type="text/javascript" src="{% get_static_prefix %}core/lib/jquery.js"></script> -->
+		<script type="text/javascript" src="{% get_static_prefix %}core/js/core.js"></script>
+		{% endblock %}
+  </head>
+
+  <body>
+		{% block content %}It works!{% endblock %}
+  </body>
+</html>

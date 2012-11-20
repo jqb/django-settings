@@ -1,30 +1,20 @@
 # -*- coding: utf-8 -*-
+# framework
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
+# app local
+from . import conf
 
-class BaseSetting(models.Model):
+
+class Model(models.Model):  # Base class for db setting
     class Meta:
         abstract = True
 
     def __unicode__(self):
         return u'%s' % self.value
-
-
-class String(BaseSetting):
-    value = models.CharField(max_length=254)
-
-
-class Integer(BaseSetting):
-    value = models.IntegerField()
-
-
-class PositiveInteger(BaseSetting):
-    value = models.PositiveIntegerField()
 
 
 class SettingManager(models.Manager):
@@ -38,7 +28,7 @@ class SettingManager(models.Manager):
         queryset = self.filter(name=name)
         return queryset.exists() and queryset[0].setting_object
 
-    def set_value(self, name, SettingClass, value):
+    def set_value(self, name, SettingClass, value, validate=False):
         setting = Setting(name=name)
 
         if self.value_object_exists(name):
@@ -46,7 +36,14 @@ class SettingManager(models.Manager):
             setting_object = setting.setting_object
             setting_object.delete()
 
-        setting.setting_object = SettingClass.objects.create(value=value)
+        setting_object = SettingClass(value=value)
+
+        if validate:
+            setting_object.clean_fields()
+
+        setting_object.save()
+
+        setting.setting_object = setting_object
         setting.save()
         return setting
 
@@ -62,4 +59,47 @@ class Setting(models.Model):
     setting_id = models.PositiveIntegerField()
     setting_object = generic.GenericForeignKey('setting_type', 'setting_id')
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=conf.DJANGO_SETTINGS_UNIQUE_NAMES)
+
+
+
+# Extentions #######################################################
+from .moduleregistry import new_registry
+
+# we will extend this module dynamicaly via "settingsmodels" modules
+registry = new_registry(__name__)
+
+# cleanup
+del new_registry
+# end ###############################################################
+
+
+
+# Builtin settings models
+class Email(Model):
+    value = models.EmailField()
+    class Meta:
+        abstract = True
+registry.register(Email)
+
+
+class String(Model):
+    value = models.CharField(max_length=254)
+    class Meta:
+        abstract = True
+registry.register(String)
+
+
+class Integer(Model):
+    value = models.IntegerField()
+    class Meta:
+        abstract = True
+registry.register(Integer)
+
+
+class PositiveInteger(Model):
+    value = models.PositiveIntegerField()
+    class Meta:
+        abstract = True
+registry.register(PositiveInteger)
+# end ###################
