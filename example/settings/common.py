@@ -97,12 +97,3 @@ MEDIA_ROOT = projectpath('media')
 MEDIA_URL = '/media/'
 # APPS SETTINGS #########################################
 
-
-# ATTENTION: This may vary on your system!
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    }
-}
-

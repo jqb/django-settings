@@ -34,7 +34,6 @@ def setup(root=None, settings_module_name=None):
     # 2) setup pythonpath
     if os.path.exists(path('lib')):
         site.addsitedir(path('lib'))
-        site.addsitedir(path('..'))
 
     # 2) cofigure django
     setup_environ(settings)
