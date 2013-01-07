@@ -65,9 +65,9 @@ class SettingAdmin(admin.ModelAdmin):
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         setting_model = self.get_setting_model(obj, request)
+        context['setting_model_name'] = setting_model.__name__
         response = super(SettingAdmin, self).render_change_form(
             request, context, add=add, change=change, form_url=form_url, obj=obj)
-        response.context_data['setting_model_name'] = setting_model.__name__
         return response
 
 
