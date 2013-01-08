@@ -1,7 +1,7 @@
 django-settings
 ===============
 
-Current version: 1.3 beta
+Current version: 1.3-1 beta
 
 
 Django reusable application for storing global project settings in database.
@@ -16,7 +16,8 @@ API
 
 IMPORTANT: changed in version 1.3, old api still works but caching do not work with it.
 
-::
+
+.. code-block:: python
 
   import django_settings
 
@@ -47,14 +48,14 @@ Installation & setup
 
 1) Install it using pip:
 
-::
+.. code-block:: bash
 
    $> pip install django-settings
 
 
 2) Add "django_settings" to your INSTALLED_APPS
 
-::
+.. code-block:: python
 
     INSTALLED_APPS = (
         'django.contrib.contenttypes',  # contenttypes framework is required
@@ -70,7 +71,7 @@ Installation & setup
 3) If you want to add your own settings models, please add them in one of your
    applications models file, and register them with django_settings api:
 
-::
+.. code-block:: python
 
    # <project>/<app>/models.py
    from django.db import models
@@ -95,7 +96,7 @@ treats model classes.
 There is ability to setup some defaults via project settings.py file.
 Those settings will be setup ONLY if they not already exists in db.
 
-::
+.. code-block:: python
 
    DJANGO_SETTINGS = {
       'application_limit': ('Integer', 2),
