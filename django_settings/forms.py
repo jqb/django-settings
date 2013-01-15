@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from django import forms
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext_lazy as _
@@ -15,6 +16,18 @@ class SettingForm(forms.ModelForm):
     setting_model = None
 
     value = forms.CharField()
+
+    def clean_name(self):
+        """ Check for any other characters apart from alpha numeric chars
+        """ 
+
+        name = self.cleaned_data['name']
+        res = re.search("[^A-Za-z0-9_]", name)
+        if res:
+            raise forms.ValidationError("No spaces or special characters allowed in the name")
+        
+        return name
+
 
     def __init__(self, *args, **kwargs):
         super(SettingForm, self).__init__(*args, **kwargs)
