@@ -8,6 +8,7 @@ a set of tools that makes method caching a little more flexible that simple
 
 XXX: the whole mechanism should be fixed as now it's too complicated to explain
 """
+from django.conf import settings
 
 
 class MethodProxy(object):
@@ -27,7 +28,13 @@ class MethodProxy(object):
         return self.method(self.instance, *args, **kwargs)
 
     def _args_to_key(self, args):
-        return ":".join([str(val) for val in args])
+        values = []
+        for val in args:
+            if isinstance(val, unicode):
+                values.append(val.encode(settings.DEFAULT_CHARSET))
+            else:
+                values.append(str(val))
+        return ":".join(values)
 
     def _kwargs_to_key(self, kwargs):
         return ":".join(["%s:%s" % (k,v) for k, v in kwargs.items()])
@@ -74,4 +81,3 @@ class cache_method(object):
             proxy = self.method_proxy_class(instance, self.method)
             setattr(instance, self.method_proxy_name, proxy)
         return proxy
-
