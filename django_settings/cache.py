@@ -12,6 +12,8 @@ from django.conf import settings
 
 
 class MethodProxy(object):
+    default_charset = settings.DEFAULT_CHARSET
+
     def __init__(self, instance, method):
         self.key_prefix = 'django_settings'
         self.instance = instance
@@ -27,17 +29,20 @@ class MethodProxy(object):
     def origin_method(self, *args, **kwargs):
         return self.method(self.instance, *args, **kwargs)
 
+    def _convert(self, arg):
+        if isinstance(arg, unicode):
+            return arg.encode(self.default_charset)
+        else:
+            return str(arg)
+
     def _args_to_key(self, args):
-        values = []
-        for val in args:
-            if isinstance(val, unicode):
-                values.append(val.encode(settings.DEFAULT_CHARSET))
-            else:
-                values.append(str(val))
-        return ":".join(values)
+        return ":".join(map(self._convert, args))
 
     def _kwargs_to_key(self, kwargs):
-        return ":".join(["%s:%s" % (k,v) for k, v in kwargs.items()])
+        return ":".join([
+            "%s:%s" % (self._convert(k), self._convert(v))
+            for k, v in kwargs.items()
+        ])
 
     def _cache_key_for_method(self, method_name, *args, **kwargs):
         key = ":".join((
