@@ -12,8 +12,6 @@ from django.conf import settings
 
 
 class MethodProxy(object):
-    default_charset = settings.DEFAULT_CHARSET
-
     def __init__(self, instance, method):
         self.key_prefix = 'django_settings'
         self.instance = instance
@@ -31,7 +29,7 @@ class MethodProxy(object):
 
     def _convert(self, arg):
         if isinstance(arg, unicode):
-            return arg.encode(self.default_charset)
+            return arg.encode(settings.DEFAULT_CHARSET)
         else:
             return str(arg)
 
