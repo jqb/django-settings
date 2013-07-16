@@ -1,7 +1,7 @@
 django-settings
 ===============
 
-Current version: 1.3-2 beta
+Current version: 1.3-3 beta
 
 
 Django reusable application for storing global project settings in database.
