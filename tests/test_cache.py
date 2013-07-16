@@ -44,7 +44,7 @@ class MethodProxyTest(TestCase):
         arg2_encoded = '\xc3\xb3\xc5\x82'
         arg3_encoded = 'True'
 
-        key = self.mproxy._args_to_key([arg1, arg2, arg3])
+        key = self.mproxy._keymaker.args_to_key([arg1, arg2, arg3])
         expected = '%s:%s:%s' % (arg1_encoded, arg2_encoded, arg3_encoded)
 
         n.assert_equal(key, expected)
@@ -56,7 +56,7 @@ class MethodProxyTest(TestCase):
         kw_key_encoded = 'key'
         kw_val_encoded = '\xc3\xb3\xc5\x82'
 
-        key = self.mproxy._kwargs_to_key({
+        key = self.mproxy._keymaker.kwargs_to_key({
             kw_key: kw_val,
         })
         expected = '%s:%s' % (kw_key_encoded, kw_val_encoded)

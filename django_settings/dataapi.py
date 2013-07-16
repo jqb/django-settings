@@ -21,8 +21,8 @@ db = lazyimport({
 
 class dataapi_set_method_proxy(MethodProxy):
     def __call__(self, type_name, name, value, validate=True):
-        get_key      = self._cache_key_for_method('get', name)
-        exists_key   = self._cache_key_for_method('exists', name)
+        get_key      = self._keymaker.make('get', [name], {})
+        exists_key   = self._keymaker.make('exists', [name], {})
         setting      = self.origin_method(type_name, name, value, validate=validate)
         cached_value = self._cache_set(get_key, setting.setting_object.value)
         self._cache_set(exists_key, True)
