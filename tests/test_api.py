@@ -32,3 +32,18 @@ class APITest(DBTestCase):
             django_settings.db.Setting.DoesNotExist,
             lambda: django_settings.get('unexisting_value'),
         )
+
+    def test_setting_value_few_times(self):
+        typename = "MyString"
+        django_settings.set(typename, 'test_string', 'data1')
+        n.assert_equal(django_settings.exists('test_string'), True)
+        n.assert_equal(django_settings.get("test_string"), "data1")
+
+        django_settings.set(typename, 'test_string', 'data2')
+        n.assert_equal(django_settings.data.get("test_string"), "data2")
+
+        django_settings.set(typename, 'test_string', 'data3')
+        n.assert_equal(django_settings.data.get("test_string"), "data3")
+
+        django_settings.set(typename, 'test_string', 'data4')
+        n.assert_equal(django_settings.data.get("test_string"), "data4")
