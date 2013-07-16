@@ -33,13 +33,10 @@ NIL = type('NIL', (object,), {})()
 
 
 class dataapi_get_method_proxy(MethodProxy):
-    def _cache_key(self, name): # should accept only "name"
-        return self._cache_key_for_method('get', name)
-
     def __call__(self, name, **kwargs):
         default = kwargs.pop('default', NIL)
         try:
-            return super(dataapi_get_method_proxy, self).__call__(name, **kwargs)
+            return super(dataapi_get_method_proxy, self).__call__(name)
         except db.Setting.DoesNotExist:
             if default != NIL:
                 return default
