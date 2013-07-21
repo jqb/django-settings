@@ -3,6 +3,12 @@ django-settings
 
 Current version: 1.3-3 beta
 
+.. image:: https://badge.fury.io/py/django-settings.png
+   :target: https://badge.fury.io/py/django-settings
+
+.. image:: https://api.travis-ci.org/jqb/django-settings.png?branch=master
+   :target: https://travis-ci.org/jqb/django-settings
+
 
 Django reusable application for storing global project settings in database.
 
