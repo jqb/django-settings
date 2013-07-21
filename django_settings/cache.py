@@ -51,7 +51,7 @@ class MethodProxy(object):
         self._keymaker = KeyMaker(prefix='django_settings')
 
         # NOTE: it's proxy, so let's add at least some basic func properties
-        self.func_name = self.method.func_name
+        self.func_name = self.method.__name__
 
     @property
     def cache(self):
