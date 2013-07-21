@@ -11,6 +11,13 @@ default_post_limit etc. Values are validated depending their type.
 Begining with ver 1.3 you can register your own settings values.
 
 
+Supported versions
+------------------
+
+* Python: 2.6, 2.7, 3.2, 3.3
+* Django: 1.3, 1.4, 1.5
+
+
 API
 ---
 
