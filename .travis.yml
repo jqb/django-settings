@@ -2,8 +2,6 @@ language: python
 python:
   - "2.6"
   - "2.7"
-  - "3.2"
-  - "3.3"
 env:
   - DJANGO_VERSION=1.3
   - DJANGO_VERSION=1.4
@@ -11,5 +9,6 @@ env:
 install:
   - "pip install django==$DJANGO_VERSION --use-mirrors"
   - "pip install -r requirements.txt --use-mirrors"
+  - "if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install --use-mirrors importlib; fi"
 script:
   - "nosetests tests"
