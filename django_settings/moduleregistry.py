@@ -32,6 +32,7 @@ Usage::
 """
 # system
 import sys
+import types
 
 
 def subclass(class_=None, module=None):
@@ -103,9 +104,9 @@ class ModuleRegistry(object):
 
 
 def new_registry(module_or_name):
-    if issubclass(module_or_name.__class__, basestring):
-        module = sys.modules[module_or_name]
-    else:
+    if issubclass(module_or_name.__class__, types.ModuleType):
         module = module_or_name
+    else:
+        module = sys.modules[module_or_name]
     return ModuleRegistry(module)
 
