@@ -70,7 +70,9 @@ class DataAPI(object):
         return self._client or django.cache
 
     def contenttypes_names(self):
-        ctypes = django.ContentType.objects.get_for_models(*db.registry.values()).values()
+        ctypes = django.ContentType.objects.filter(
+            django.Q(app_label="django_settings") & ~django.Q(name="Setting")
+        )
         return map(self.name_getter, ctypes)
     contenttypes_names = cache_method(contenttypes_names)
 
