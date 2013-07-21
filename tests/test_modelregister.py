@@ -15,7 +15,7 @@ class ModelRegisterTest(TestCase):
         settingsmodels.register()
 
         n.assert_true(hasattr(models, 'MyString'))
-        n.assert_in('MyString', models.registry)
+        n.assert_true('MyString' in models.registry)
 
         n.assert_not_equal(
             models.MyString.__module__,
