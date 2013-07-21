@@ -8,7 +8,11 @@ a set of tools that makes method caching a little more flexible that simple
 
 XXX: the whole mechanism should be fixed as now it's too complicated to explain
 """
-from django.conf import settings
+from .lazyimport import lazyimport
+
+django = lazyimport({
+    'settings': 'django.conf',
+})
 
 
 class KeyMaker(object):
@@ -17,7 +21,7 @@ class KeyMaker(object):
 
     def convert(self, arg):
         if isinstance(arg, unicode):
-            return arg.encode(settings.DEFAULT_CHARSET)
+            return arg.encode(django.settings.DEFAULT_CHARSET)
         else:
             return str(arg)
 
