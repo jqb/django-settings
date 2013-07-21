@@ -6,12 +6,12 @@ from . import TestCase, n
 class ModelRegisterTest(TestCase):
     def test_importing_special_module_should_add_all_registered_classes(self):
         # before special module import
-        from moduleregistry_testapp import models
+        from .moduleregistry_testapp import models
         n.assert_false(hasattr(models, 'MyString'))
         n.assert_not_in('MyString', models.registry)
 
         # import special module that triggers registering
-        from moduleregistry_testapp import settingsmodels
+        from .moduleregistry_testapp import settingsmodels
         settingsmodels.register()
 
         n.assert_true(hasattr(models, 'MyString'))

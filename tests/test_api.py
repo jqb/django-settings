@@ -6,7 +6,7 @@ from . import DBTestCase, n
 import django_settings
 
 # test app imports
-from moduleregistry_testapp import settingsmodels
+from .moduleregistry_testapp import settingsmodels
 
 
 class APITest(DBTestCase):
