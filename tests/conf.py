@@ -15,3 +15,5 @@ INSTALLED_APPS = (
     'tests.moduleregistry_testapp',
 )
 
+
+SECRET_KEY = 'secret'
