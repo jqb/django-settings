@@ -8,7 +8,7 @@ class ModelRegisterTest(TestCase):
         # before special module import
         from .moduleregistry_testapp import models
         n.assert_false(hasattr(models, 'MyString'))
-        n.assert_not_in('MyString', models.registry)
+        n.assert_false('MyString' in models.registry)
 
         # import special module that triggers registering
         from .moduleregistry_testapp import settingsmodels
