@@ -43,7 +43,7 @@ if __name__ == "__main__":
     os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
     from django.core.management import execute_manager
-    setup('settings')
+    setup()
 
     try:
         import settings # Assumed to be in the same directory.
