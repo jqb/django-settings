@@ -19,7 +19,7 @@ Begining with ver 1.3 you can register your own settings values.
 Supported versions
 ------------------
 
-* Python: 2.6, 2.7
+* Python: 2.6, 2.7  (python 2.6 requires importlib)
 * Django: 1.3, 1.4, 1.5
 
 
