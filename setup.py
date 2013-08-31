@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-import re
 from setuptools import setup, find_packages
 
-version = re.search(
-    r"VERSION = ['\"](.*)['\"]",
-    open("django_settings/__init__.py").read()
-).group(1)
 
 setup(
     name='django-settings',
-    version=version,
+    version='1.3.4',
     description='Simple django reusable application for storing project settings in database.',
     author='Kuba Janoszek',
     author_email='kuba.janoszek@gmail.com',
