@@ -1,7 +1,6 @@
 django-settings
 ===============
 
-Current version: 1.3-3 beta
 
 .. image:: https://badge.fury.io/py/django-settings.png
    :target: https://badge.fury.io/py/django-settings
