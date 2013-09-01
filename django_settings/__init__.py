@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-VERSION = '1.3.4'
+VERSION = '1.3-4'
 
 __version__ = VERSION
 __author__ = "Kuba Janoszek"

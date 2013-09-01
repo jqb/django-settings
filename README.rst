@@ -131,6 +131,12 @@ You can manipulate setting via your admin interface.
 Changelog
 ---------
 
+1.3-4 - setup.py bug fix
+
+
+1.3-3 beta - python & django various versions compatibility changes
+
+
 1.3-2 beta - several bug fixes including cache unicode keys handling, tests added
 
 
