@@ -32,6 +32,7 @@ class DjangoSettingsAdminTest(DBTestCase):
     def test_admin_settings_list(self):
         from django_settings import admin as django_settings_admin
         import django_settings
+        import django
 
         # set some data
         data = [
@@ -52,6 +53,7 @@ class DjangoSettingsAdminTest(DBTestCase):
             return self.client.get('/admin/django_settings/setting/')
 
         expected_queries = sum([
+            1 if django.get_version() == '1.3' else 0,  # auth_messages (gone for ver > 1.3)
             1,  # auth_user
             1,  # session
             1,  # number of settings
