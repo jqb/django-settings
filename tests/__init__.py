@@ -20,10 +20,10 @@ class AssertQueriesCountMixin(object):
 
         context = _AssertNumQueriesContext(self, num, conn)
         if func is None:
-            return context
+            return None
 
         with context:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
 
 
 class TestCase(unittest.TestCase):
