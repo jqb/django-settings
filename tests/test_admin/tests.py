@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .. import DBTestCase, n
+from .. import DBTestCase
 
 
 BUILTIN_TYPE_NAMES = ['Integer', 'Email', 'PositiveInteger', 'String']
@@ -34,11 +34,11 @@ class DjangoSettingsAdminTest(DBTestCase):
 
         response = self.client.get('/admin/django_settings/setting/')
         ctx = response.context
-        n.assert_true('cl' in ctx)
+        self.assert_true('cl' in ctx)
 
         change_list = ctx['cl']
-        n.assert_true(isinstance(change_list, django_settings_admin.ChangeList))
-        n.assert_items_equal(
+        self.assert_true(isinstance(change_list, django_settings_admin.ChangeList))
+        self.assert_items_equal(
             change_list.available_settings_models,
             BUILTIN_TYPE_NAMES,
         )
@@ -46,19 +46,19 @@ class DjangoSettingsAdminTest(DBTestCase):
     def test_create_settings_get(self):
         # First check if 404 is raise when there's no 'typename'
         response = self.client.get('/admin/django_settings/setting/add/', follow=True)
-        n.assert_equal(response.status_code, 404)
+        self.assert_equal(response.status_code, 404)
 
         for btype in BUILTIN_TYPE_NAMES:
             response = self.client.get('/admin/django_settings/setting/add/?typename=%s' % btype)
-            n.assert_equal(response.status_code, 200)
+            self.assert_equal(response.status_code, 200)
 
     def test_create_settings_post_should_contain_errors(self):
         for btype in BUILTIN_TYPE_NAMES:
             response = self.client.post('/admin/django_settings/setting/add/?typename=%s' % btype)
             adminform = response.context['adminform']
 
-            n.assert_equal(response.status_code, 200)
-            n.assert_equal(adminform.form.errors, {
+            self.assert_equal(response.status_code, 200)
+            self.assert_equal(adminform.form.errors, {
                 'name': [u'This field is required.'],
                 'value': [u'This field is required.'],
             })
@@ -75,16 +75,16 @@ class DjangoSettingsAdminTest(DBTestCase):
 
         def test_all_save_button_cases(btype, value):
             resp = create_setting(btype, 'test-%s-1' % btype, value, {'_continue': True})
-            n.assert_equal(resp.status_code, 200)
-            n.assert_equal(resp.context['adminform'].form.errors, {})
+            self.assert_equal(resp.status_code, 200)
+            self.assert_equal(resp.context['adminform'].form.errors, {})
 
             resp = create_setting(btype, 'test-%s-2' % btype, value, {'_addanother': True})
-            n.assert_equal(resp.status_code, 200)
-            n.assert_equal(resp.context['adminform'].form.errors, {})
+            self.assert_equal(resp.status_code, 200)
+            self.assert_equal(resp.context['adminform'].form.errors, {})
 
             resp = create_setting(btype, 'test-%s-3' % btype, value, {'_save': True})
-            n.assert_equal(resp.status_code, 200)
-            n.assert_equal(resp.redirect_chain, [('http://testserver/admin/django_settings/setting/', 302)])
+            self.assert_equal(resp.status_code, 200)
+            self.assert_equal(resp.redirect_chain, [('http://testserver/admin/django_settings/setting/', 302)])
 
         test_all_save_button_cases('Integer', '123')
         test_all_save_button_cases('String', 'test string value')
