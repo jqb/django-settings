@@ -18,7 +18,23 @@ TestCase = unittest.TestCase
 n        = nose.tools
 
 
-class DBTestCase(TestCase):
+class AssertQueriesCountMixin(object):
+    def assert_queries_count(self, num, func=None, *args, **kwargs):
+        from django.test.testcases import _AssertNumQueriesContext
+        from django.db import connections, DEFAULT_DB_ALIAS
+
+        using = kwargs.pop("using", DEFAULT_DB_ALIAS)
+        conn = connections[using]
+
+        context = _AssertNumQueriesContext(self, num, conn)
+        if func is None:
+            return context
+
+        with context:
+            func(*args, **kwargs)
+
+
+class DBTestCase(TestCase, AssertQueriesCountMixin):
     test_runner, old_config = None, None
 
     def setUp(self):
