@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # test stuff
-from . import TestCase, n
+from . import TestCase
 
 # tested app
 import django_settings
@@ -47,8 +47,8 @@ class MethodProxyTest(TestCase):
         key = self.mproxy._keymaker.args_to_key([arg1, arg2, arg3])
         expected = '%s:%s:%s' % (arg1_encoded, arg2_encoded, arg3_encoded)
 
-        n.assert_equal(key, expected)
-        n.assert_equal(key.__class__, str)
+        self.assert_equal(key, expected)
+        self.assert_equal(key.__class__, str)
 
     def test__kwargs_to_key__with_unicode_chars(self):
         kw_key = u'key'  # nobodys using unicode var names as funtion params, right?
@@ -61,17 +61,17 @@ class MethodProxyTest(TestCase):
         })
         expected = '%s:%s' % (kw_key_encoded, kw_val_encoded)
 
-        n.assert_equal(key, expected)
-        n.assert_equal(key.__class__, str)
+        self.assert_equal(key, expected)
+        self.assert_equal(key.__class__, str)
 
     def test_should_cache_method_result(self):
-        n.assert_equal(self.object.counter, 0)
+        self.assert_equal(self.object.counter, 0)
 
         args = [u'ąśżźć', u'ół']
         kwargs = {'kw1': u'ąśżźć', 'kw2': u'ół'}
 
         self.mproxy(*args, **kwargs)  # invocation & cache
-        n.assert_equal(self.object.counter, 1)
+        self.assert_equal(self.object.counter, 1)
 
         self.mproxy(*args, **kwargs)  # should be taken from cache
-        n.assert_equal(self.object.counter, 1)
+        self.assert_equal(self.object.counter, 1)
