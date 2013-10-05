@@ -14,9 +14,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.conf'
 sys.path.insert(0, abspath(join(dirname(__file__), pardir)))
 
 
-n = nose.tools
-
-
 class AssertQueriesCountMixin(object):
     def assert_queries_count(self, num, func=None, *args, **kwargs):
         from django.test.testcases import _AssertNumQueriesContext
@@ -31,9 +28,6 @@ class AssertQueriesCountMixin(object):
 
         with context:
             func(*args, **kwargs)
-
-
-n = nose.tools
 
 
 class TestCase(unittest.TestCase):
