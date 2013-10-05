@@ -29,6 +29,6 @@ class ModelRegisterTest(TestCase):
         # registered class became a part of the module
         n.assert_equal(models.MyString.__module__, models.__name__)
 
-        models.registry.unregister_all()
+        models.registry.unregister('MyString')
         n.assert_false(hasattr(models, 'MyString'))
 

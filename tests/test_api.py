@@ -14,7 +14,7 @@ class APITest(DBTestCase):
         django_settings.register(settingsmodels.MyString)
 
     def teardown(self):
-        django_settings.unregister_all()
+        django_settings.unregister('MyString')
 
     def test_should_set_properly(self):
         n.assert_true(hasattr(django_settings.models, 'MyString'))
