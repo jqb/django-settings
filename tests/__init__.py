@@ -42,6 +42,7 @@ class TestCase(unittest.TestCase):
     assert_true = unittest.TestCase.assertTrue
     assert_false = unittest.TestCase.assertFalse
     assert_raises = unittest.TestCase.assertRaises
+    assert_items_equal = unittest.TestCase.assertItemsEqual
 
 
 class DBTestCase(TestCase, AssertQueriesCountMixin):
