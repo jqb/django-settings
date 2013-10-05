@@ -47,3 +47,23 @@ class DataCachingTest(DBTestCase):
         for _ in xrange(10):
             self.assert_queries_count(0, getting_setting)
             self.assert_queries_count(0, checking_existence_of_setting)
+
+    def test_getting_all_should_not_run_any_queries(self):
+        data = [
+            ("Integer", "test-int", 1),
+            ("String", "test-str", "Value"),
+            ("Email", "test-email", "admin@admin.com"),
+        ]
+        data_dict = dict([
+            (name, value) for _, name, value in data
+        ])
+
+        def set_all_data():
+            for type_name, name, value in data:
+                django_settings.set(type_name, name, value)
+
+        def get_all_data():
+            self.assert_items_equal(django_settings.all(), data_dict)
+
+        self.assert_queries_count(len(data) * 4, set_all_data)
+        self.assert_queries_count(1, get_all_data)  # one query for all names

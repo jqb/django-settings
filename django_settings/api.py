@@ -8,6 +8,7 @@ from .dataapi import DataAPI, data
 get = data.get
 set = data.set
 exists = data.exists
+all = data.all
 type_names = data.type_names
 
 

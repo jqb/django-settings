@@ -96,6 +96,11 @@ class DataAPI(object):
         return bool(db.Setting.objects.value_object_exists(name))
     exists = cache_method(exists)
 
+    def all(self):
+        names = db.Setting.objects.values_list('name', flat=True)
+        items = [(name, self.get(name)) for name in names]
+        return dict(items)
+
     def clear_cache(self):
         self.cache.clear()
 
