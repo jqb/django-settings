@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.forms.models import modelform_factory
-from django.utils.translation import ugettext_lazy as _
 
 from . import api as django_settings
 
@@ -42,4 +40,3 @@ class SettingForm(forms.ModelForm):
         instance.setting_object = setting_object
         instance.save()
         return self.setting_changed(instance)
-

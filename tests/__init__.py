@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 # system
 import os
-import re
 import sys
 import unittest
 from os.path import join, pardir, abspath, dirname
-
-# tools
-import nose
 
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.conf'

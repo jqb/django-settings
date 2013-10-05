@@ -109,4 +109,3 @@ def new_registry(module_or_name):
     else:
         module = sys.modules[module_or_name]
     return ModuleRegistry(module)
-

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db.models import signals
-from django.contrib.contenttypes.models import ContentType
 
 from . import dataapi, conf, models
 
