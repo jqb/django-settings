@@ -17,3 +17,26 @@ INSTALLED_APPS = (
 
 
 SECRET_KEY = 'secret'
+
+
+# For test_admin only:
+import os
+
+
+def here(*path):
+    absolute_here = os.path.abspath(os.path.dirname(__file__))
+    return os.path.abspath(os.path.join(absolute_here, *path))
+
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.messages',
+    'django.contrib.sessions',
+    'django.contrib.admin',
+) + INSTALLED_APPS
+
+TEMPLATE_DIRS = (
+    here('test_admin', 'templates'),
+)
+
+ROOT_URLCONF = 'tests.test_admin.urls'
