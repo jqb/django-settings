@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-# system
-from operator import attrgetter
-
 # module
 from .cache import cache_method, MethodProxy
 from .lazyimport import lazyimport
@@ -59,9 +56,6 @@ class DataAPIMetaclass(type):
 class DataAPI(object):
     __metaclass__ = DataAPIMetaclass
 
-    # class level
-    name_getter = attrgetter('name')
-
     def __init__(self, cache_client=None):
         self._client = cache_client
 
@@ -73,7 +67,7 @@ class DataAPI(object):
         ctypes = django.ContentType.objects.filter(
             django.Q(app_label="django_settings") & ~django.Q(name="Setting")
         )
-        return map(self.name_getter, ctypes)
+        return [ct.name for ct in ctypes]
     contenttypes_names = cache_method(contenttypes_names)
 
     def contenttypes_queryset(self):
