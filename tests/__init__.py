@@ -14,8 +14,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.conf'
 sys.path.insert(0, abspath(join(dirname(__file__), pardir)))
 
 
-TestCase = unittest.TestCase
-n        = nose.tools
+n = nose.tools
 
 
 class AssertQueriesCountMixin(object):
@@ -32,6 +31,16 @@ class AssertQueriesCountMixin(object):
 
         with context:
             func(*args, **kwargs)
+
+
+n = nose.tools
+
+
+class TestCase(unittest.TestCase):
+    assert_equal = unittest.TestCase.assertEqual
+    assert_not_equal = unittest.TestCase.assertNotEqual
+    assert_true = unittest.TestCase.assertTrue
+    assert_false = unittest.TestCase.assertFalse
 
 
 class DBTestCase(TestCase, AssertQueriesCountMixin):
