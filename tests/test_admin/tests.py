@@ -31,8 +31,36 @@ class DjangoSettingsAdminTest(DBTestCase):
 
     def test_admin_settings_list(self):
         from django_settings import admin as django_settings_admin
+        import django_settings
 
-        response = self.client.get('/admin/django_settings/setting/')
+        # set some data
+        data = [
+            ("Integer", "test-int", 1),
+            ("String", "test-str", "Value"),
+            ("Email", "test-email", "admin@admin.com"),
+        ]
+
+        def set_all_data():
+            for type_name, name, value in data:
+                django_settings.set(type_name, name, value)
+
+        self.assert_queries_count(len(data) * 4, set_all_data)
+        # end
+
+        # run request and check number of quesries
+        def run_request():
+            return self.client.get('/admin/django_settings/setting/')
+
+        expected_queries = sum([
+            1,  # auth_user
+            1,  # session
+            1,  # number of settings
+            1,  # names of settings
+        ])
+
+        response = self.assert_queries_count(expected_queries, run_request)
+        # end
+
         ctx = response.context
         self.assert_true('cl' in ctx)
 
