@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # test stuff
-from . import DBTestCase, n
+from . import DBTestCase
 
 # tested app
 import django_settings
@@ -21,15 +21,15 @@ class DataCachingTest(DBTestCase):
     def test_should_run_queries_only_for_save(self):
         def setting_up_setting():
             cached_value = django_settings.data.set('Integer', 'test-1', 1)
-            n.assert_equal(cached_value, 1)
+            self.assert_equal(cached_value, 1)
 
         def getting_setting():
             cached_value = django_settings.data.get('test-1')
-            n.assert_equal(cached_value, 1)
+            self.assert_equal(cached_value, 1)
 
         def checking_existence_of_setting():
             exists = django_settings.data.exists('test-1')
-            n.assert_true(exists)
+            self.assert_true(exists)
 
         # django should run 4 queries for us here:
         # 1) check if *setting* object exists (if yes -
