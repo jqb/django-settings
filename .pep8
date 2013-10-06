@@ -1,6 +1,5 @@
-[pep8]
-
-exclude = */docs/*
+[flake8]
+exclude = */docs/*,*/.tox/*,*/.venv/*
 max-line-length = 100
 
 # E251 no spaces around keyword / parameter equals
