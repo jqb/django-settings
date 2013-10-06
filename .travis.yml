@@ -12,3 +12,4 @@ install:
   - "if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install --use-mirrors importlib; fi"
 script:
   - "nosetests tests"
+  - "flake8 --config .flake8 django_settings tests"
