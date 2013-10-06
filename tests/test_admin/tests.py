@@ -114,7 +114,9 @@ class DjangoSettingsAdminTest(DBTestCase):
 
             resp = create_setting(btype, 'test-%s-3' % btype, value, {'_save': True})
             self.assert_equal(resp.status_code, 200)
-            self.assert_equal(resp.redirect_chain, [('http://testserver/admin/django_settings/setting/', 302)])
+            self.assert_equal(resp.redirect_chain, [
+                ('http://testserver/admin/django_settings/setting/', 302),
+            ])
 
         test_all_save_button_cases('Integer', '123')
         test_all_save_button_cases('String', 'test string value')
