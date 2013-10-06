@@ -5,4 +5,4 @@ __version__ = VERSION
 __author__ = "Kuba Janoszek"
 
 # module public API
-from .api import *
+from .api import *  # noqa
