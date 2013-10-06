@@ -24,4 +24,3 @@ db = lazyimport({  # this is also part of public api
 register       = lambda *a, **kw: db.registry.register(*a, **kw)
 unregister     = lambda *a, **kw: db.registry.unregister(*a, **kw)
 unregister_all = lambda *a, **kw: db.registry.unregister_all(*a, **kw)
-

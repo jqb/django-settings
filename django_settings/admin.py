@@ -100,4 +100,3 @@ class SettingAdmin(admin.ModelAdmin):
         return response
 
 admin.site.register(models.Setting, SettingAdmin)
-

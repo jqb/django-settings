@@ -27,4 +27,3 @@ class lazyimport(object):
             setattr(self, name, imported)
             return imported
         return object.__getattribute__(self, name)
-

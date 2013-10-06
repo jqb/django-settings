@@ -14,4 +14,3 @@ def add_url_for_setting_type(admin_change_list, type_name):
         popup = '_popup=1' if cl.is_popup else '',
     )
     return '%s?%s' % (reverse(url_name), query)
-
