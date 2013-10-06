@@ -66,4 +66,3 @@ class DBTestCase(TestCase, AssertQueriesCountMixin):
     def teardown(self):
         pass
 # ##############################################################
-

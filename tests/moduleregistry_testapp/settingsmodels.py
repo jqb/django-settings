@@ -13,4 +13,3 @@ class MyString(django_settings.db.Model):
 def register():
     from .models import registry
     registry.register(MyString)
-

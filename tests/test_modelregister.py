@@ -31,4 +31,3 @@ class ModelRegisterTest(TestCase):
 
         models.registry.unregister('MyString')
         self.assert_false(hasattr(models, 'MyString'))
-
