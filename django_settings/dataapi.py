@@ -6,20 +6,20 @@ from .lazyimport import lazyimport
 
 # lazy imports
 django = lazyimport({
-    'ContentType' : 'django.contrib.contenttypes.models',
-    'cache'       : 'django.core.cache',
-    'Q'           : 'django.db.models',
+    'ContentType': 'django.contrib.contenttypes.models',
+    'cache': 'django.core.cache',
+    'Q': 'django.db.models',
 })
 db = lazyimport({
-    'registry' : 'django_settings.models',
-    'Setting'  : 'django_settings.models',
+    'registry': 'django_settings.models',
+    'Setting': 'django_settings.models',
 })
 
 
 class dataapi_set_method_proxy(MethodProxy):
     def __call__(self, type_name, name, value, validate=True):
-        get_key      = self._keymaker.make('get', [name], {})
-        exists_key   = self._keymaker.make('exists', [name], {})
+        get_key = self._keymaker.make('get', [name], {})
+        exists_key = self._keymaker.make('exists', [name], {})
         value_to_cache = self.origin_method(type_name, name, value, validate=validate)
         cached_value = self._cache_set(get_key, value_to_cache)
         self._cache_set(exists_key, True)

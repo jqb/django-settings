@@ -15,12 +15,12 @@ type_names = data.type_names
 # django settings-dependent parts should be loadded lazily
 from .lazyimport import lazyimport
 db = lazyimport({  # this is also part of public api
-    'Model'    : 'django_settings.models',
-    'Setting'  : 'django_settings.models',
-    'registry' : 'django_settings.models',
+    'Model': 'django_settings.models',
+    'Setting': 'django_settings.models',
+    'registry': 'django_settings.models',
 })
 
 # expose methods
-register       = lambda *a, **kw: db.registry.register(*a, **kw)
-unregister     = lambda *a, **kw: db.registry.unregister(*a, **kw)
+register = lambda *a, **kw: db.registry.register(*a, **kw)
+unregister = lambda *a, **kw: db.registry.unregister(*a, **kw)
 unregister_all = lambda *a, **kw: db.registry.unregister_all(*a, **kw)
