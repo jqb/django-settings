@@ -53,6 +53,8 @@ IMPORTANT: changed in version 1.3, old api still works but caching do not work w
   # checking if value exists
   django_settings.exists('admin_email')
 
+  # getting all values as a dict
+  django_settings.all()
 
 
 Installation & setup
@@ -130,6 +132,13 @@ You can manipulate setting via your admin interface.
 
 Changelog
 ---------
+
+1.3-7 - several improvements and bug fix
+
+    - "all" function added
+    - admin setting add/edit callback: "DataAPI._set_cache_for" bug fix.
+    - settings timeout customization added (default to 1 day)
+
 
 1.3-4 - setup.py bug fix
 
