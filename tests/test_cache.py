@@ -15,7 +15,7 @@ class DictCache(object):
     def get(self, key):
         return self.storage.get(key)
 
-    def set(self, key, value):
+    def set(self, key, value, timeout):
         self.storage[key] = value
 
 
