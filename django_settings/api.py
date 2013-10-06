@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Public module API
-from .moduleregistry import RegisterError
-from .dataapi import DataAPI, data
+from .moduleregistry import RegisterError  # noqa
+from .dataapi import DataAPI, data  # noqa
 
 
 # shortcuts
