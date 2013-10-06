@@ -118,6 +118,13 @@ Those settings will be setup ONLY if they not already exists in db.
    }
 
 
+Default timeout is set to 1 day, but it can be changed in your project settings:
+
+.. code-block:: python
+
+   DJANGO_SETTINGS_TIMEOUT = 60 * 60 * 10  # 10 hours
+
+
 Settings types
 --------------
 
