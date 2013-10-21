@@ -140,6 +140,11 @@ You can manipulate setting via your admin interface.
 Changelog
 ---------
 
+1.3-8 - DJANGO_SETTINGS_TIMEOUT fix
+
+    - it's now cofigurable through project settings
+
+
 1.3-7 - several improvements and bug fix
 
     - "all" function added
