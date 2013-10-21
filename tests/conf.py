@@ -40,3 +40,5 @@ TEMPLATE_DIRS = (
 )
 
 ROOT_URLCONF = 'tests.test_admin.urls'
+
+DJANGO_SETTINGS_TIMEOUT = 2  # one second

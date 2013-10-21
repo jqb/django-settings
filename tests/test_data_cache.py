@@ -67,3 +67,17 @@ class DataCachingTest(DBTestCase):
 
         self.assert_queries_count(len(data) * 4, set_all_data)
         self.assert_queries_count(1, get_all_data)  # one query for all names
+
+    def test_should_cache_only_for_configurable_amount_of_time(self):
+        self.assert_equal(django_settings.conf.DJANGO_SETTINGS_TIMEOUT, 2)
+
+        original_method = django_settings.data.cache.set
+
+        def set_method_assure_timeout_passing(key, origin_value, timeout=None):
+            self.assert_equal(timeout, django_settings.conf.DJANGO_SETTINGS_TIMEOUT)
+            return original_method(key, origin_value, timeout=timeout)
+
+        django_settings.data.cache.set = set_method_assure_timeout_passing
+
+        django_settings.set('Email', 'test_email', 'test@email.com')
+        django_settings.data.cache.set = original_method
