@@ -148,6 +148,13 @@ You can manipulate setting via your admin interface.
 Changelog
 ---------
 
+1.3-11 - several bug fixes
+
+    - "Clear cache for settings" admin action exception fixed [#12]
+    - admin setting edition cache update bug fixed
+    - "syncdb" signal callback is now fixed so it won't "reinit" settings on every syncdb [#14]
+
+
 1.3-8 - DJANGO_SETTINGS_TIMEOUT fix
 
     - it's now cofigurable through project settings
@@ -202,5 +209,5 @@ Contributors
 
   * `Trey Hunner <https://github.com/treyhunner/>`_
   * `ygneo <https://github.com/ygneo/>`_
-
+  * `bsavelev <https://github.com/bsavelev>`_
 
