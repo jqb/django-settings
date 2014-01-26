@@ -106,8 +106,10 @@ class DataAPI(object):
 
     # XXX: fix this mechanism
     def _set_cache_for(self, name, value):
-        self.get._cache_set(name, value)
-        self.exists._cache_set(name, True)
+        get_key = self.get._cache_key([name], {})
+        exists_key = self.exists._cache_key([name], {})
+        self.get._cache_set(get_key, value)
+        self.exists._cache_set(exists_key, True)
 
 
 data = DataAPI()
