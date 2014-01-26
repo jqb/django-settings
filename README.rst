@@ -118,11 +118,19 @@ Those settings will be setup ONLY if they not already exists in db.
    }
 
 
-Default timeout is set to 1 day, but it can be changed in your project settings:
+Default django-settings timeout is set to 1 day, but it can be changed
+in your project settings:
 
 .. code-block:: python
 
    DJANGO_SETTINGS_TIMEOUT = 60 * 60 * 10  # 10 hours
+
+
+Timeout let's you define cache timeout (in sec.) for each of the
+settings. After the given time values gets expired and each of them
+will be recalculated (at the moment you ask for the given
+setting). Introduced due to django's defaults cache timeout (5 min):
+https://docs.djangoproject.com/en/dev/topics/cache/#cache-arguments
 
 
 Settings types
