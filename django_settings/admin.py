@@ -30,8 +30,8 @@ def clear_cache(modeladmin, request, queryset):
     cache_keys = []
     add_key = cache_keys.append
     for name in queryset.values_list('name', flat=True):
-        add_key(data.get._cache_key(name))
-        add_key(data.exists._cache_key(name))
+        add_key(data.get._cache_key([name], {}))
+        add_key(data.exists._cache_key([name], {}))
     data.cache.delete_many(cache_keys)
 clear_cache.short_description = _("Clear cache for settings")
 # end
