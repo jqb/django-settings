@@ -57,6 +57,17 @@ IMPORTANT: changed in version 1.3, old api still works but caching do not work w
   django_settings.all()
 
 
+Or in templates
+
+
+.. code-block:: python
+
+  {% load settings_tags %}
+
+  Current post limit is {% settings "post_limit" %}
+  
+
+
 Installation & setup
 --------------------
 
