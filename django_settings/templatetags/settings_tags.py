@@ -4,6 +4,7 @@ import django_settings
 
 register = template.Library()
 
+
 @register.tag
 def settings(parser, token):
     tag_name, format_string = token.split_contents()
