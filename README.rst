@@ -65,7 +65,11 @@ Or in templates
   {% load settings_tags %}
 
   Current post limit is {% settings "post_limit" %}
-  
+
+  or
+
+  {% settings "post_limit" as post_limit %}
+  Current post limit is {{ post_limit }}
 
 
 Installation & setup
