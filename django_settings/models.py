@@ -4,6 +4,9 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
+from django.db.models.signals import post_syncdb
+from dataapi import initialize_data
 
 # app local
 from . import conf
@@ -107,3 +110,8 @@ class PositiveInteger(Model):
         abstract = True
 registry.register(PositiveInteger)
 # end ###################
+
+
+@receiver(post_syncdb)
+def handle_post_syncdb(sender, **kwargs):
+    initialize_data()
