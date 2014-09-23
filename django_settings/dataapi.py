@@ -120,6 +120,7 @@ data = DataAPI()
 
 DEFAULT_SETTINGS = getattr(conf, 'DJANGO_SETTINGS', {})
 
+
 def initialize_data():
     for name, type_name_and_value in DEFAULT_SETTINGS.items():
         type_name, value = type_name_and_value

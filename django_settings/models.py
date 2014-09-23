@@ -77,7 +77,6 @@ del new_registry
 # end ###############################################################
 
 
-
 # Builtin settings models
 class Email(Model):
     value = models.EmailField()
