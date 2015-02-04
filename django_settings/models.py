@@ -6,7 +6,6 @@ from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_syncdb
-from dataapi import initialize_data
 
 # app local
 from . import conf
@@ -113,4 +112,5 @@ registry.register(PositiveInteger)
 
 @receiver(post_syncdb)
 def handle_post_syncdb(sender, **kwargs):
+    from django_settings.dataapi import initialize_data
     initialize_data()

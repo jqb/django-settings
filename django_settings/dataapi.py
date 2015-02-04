@@ -2,7 +2,7 @@
 # module
 from .cache import cache_method, MethodProxy
 from .lazyimport import lazyimport
-import conf
+from . import conf
 
 
 # lazy imports
@@ -117,7 +117,6 @@ data = DataAPI()
 
 
 # initialize data
-
 DEFAULT_SETTINGS = getattr(conf, 'DJANGO_SETTINGS', {})
 
 
