@@ -155,6 +155,11 @@ You can manipulate setting via your admin interface.
 Changelog
 ---------
 
+1.3.12 - post sync db settings initialization fixed
+
+    - initial signal moved to models
+
+
 1.3-11 - several bug fixes
 
     - "Clear cache for settings" admin action exception fixed [#12]
@@ -217,4 +222,4 @@ Contributors
   * `Trey Hunner <https://github.com/treyhunner/>`_
   * `ygneo <https://github.com/ygneo/>`_
   * `bsavelev <https://github.com/bsavelev>`_
-
+  * `akolpakov <https://github.com/akolpakov>`_
