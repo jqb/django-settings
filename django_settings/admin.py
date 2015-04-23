@@ -6,6 +6,7 @@ from django.contrib.admin.views import main as admin_views
 from django.utils.translation import ugettext as _
 from django.http import Http404, HttpResponseRedirect
 
+import django
 
 # module local
 from . import models, forms, dataapi
@@ -89,10 +90,11 @@ class SettingAdmin(admin.ModelAdmin):
     def response_change(self, request, obj):
         response = super(SettingAdmin, self).response_change(request, obj)
         app_label = obj._meta.app_label
-        module_name = obj._meta.module_name
+        module_model = obj._meta.module_name if django.VERSION < (1, 5) else obj._meta.model_name
+        module_name = module_model
 
         if '_addanother' in request.POST:
-            url_name = 'admin:%s_%s_add' % (app_label, module_name)
+            url_name = 'admin:%s_%s_add' % (app_label, module_model)
             url = reverse(url_name, current_app=self.admin_site.name)
             typename = self.get_setting_model(obj, request).__name__
             return self._response_url(url, typename)
