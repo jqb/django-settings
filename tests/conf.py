@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -20,7 +22,6 @@ SECRET_KEY = 'secret'
 
 
 # For test_admin only:
-import os
 
 
 def here(*path):
