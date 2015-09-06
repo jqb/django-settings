@@ -133,6 +133,13 @@ Those settings will be setup ONLY if they not already exists in db.
    }
 
 
+For import DJANGO_SETTINGS into database use command:
+
+.. code-block:: python
+
+    ./manage.py settings_initialize
+
+
 Default django-settings timeout is set to 1 day, but it can be changed
 in your project settings:
 
@@ -162,6 +169,11 @@ You can manipulate setting via your admin interface.
 
 Changelog
 ---------
+
+1.3.12 - post sync db settings initialization fixed
+
+    - initial signal moved to models
+
 
 1.3-11 - several bug fixes
 
@@ -225,4 +237,4 @@ Contributors
   * `Trey Hunner <https://github.com/treyhunner/>`_
   * `ygneo <https://github.com/ygneo/>`_
   * `bsavelev <https://github.com/bsavelev>`_
-
+  * `akolpakov <https://github.com/akolpakov>`_

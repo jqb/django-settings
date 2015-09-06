@@ -2,6 +2,7 @@
 # module
 from .cache import cache_method, MethodProxy
 from .lazyimport import lazyimport
+from . import conf
 
 
 # lazy imports
@@ -113,3 +114,15 @@ class DataAPI(object):
 
 
 data = DataAPI()
+
+
+# initialize data
+DEFAULT_SETTINGS = getattr(conf, 'DJANGO_SETTINGS', {})
+
+
+def initialize_data():
+    for name, type_name_and_value in DEFAULT_SETTINGS.items():
+        type_name, value = type_name_and_value
+
+        if not data.exists(name):
+            data.set(type_name, name, value)
