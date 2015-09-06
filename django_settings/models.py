@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_syncdb
 
+from .moduleregistry import new_registry
+
 # app local
 from . import conf
 
@@ -66,7 +68,6 @@ class Setting(models.Model):
 
 
 # Extentions #######################################################
-from .moduleregistry import new_registry
 
 # we will extend this module dynamicaly via "settingsmodels" modules
 registry = new_registry(__name__)
