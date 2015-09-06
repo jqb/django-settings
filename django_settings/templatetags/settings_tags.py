@@ -6,7 +6,7 @@ import django_settings
 register = template.Library()
 
 
-class ContextNode(template.TextNode):
+class ContextNode(template.Node):
     def __init__(self, s, var_name):
         super(ContextNode, self).__init__(s)
         self.var_name = var_name
