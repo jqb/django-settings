@@ -2,7 +2,11 @@
 # framework
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+import django
+if django.VERSION >= (1, 8):
+    from django.contrib.contenttypes import fields as generic_fields
+else:
+    from django.contrib.contenttypes import generic as generic_fields
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_syncdb
@@ -61,7 +65,7 @@ class Setting(models.Model):
 
     setting_type = models.ForeignKey(ContentType)
     setting_id = models.PositiveIntegerField()
-    setting_object = generic.GenericForeignKey('setting_type', 'setting_id')
+    setting_object = generic_fields.GenericForeignKey('setting_type', 'setting_id')
 
     name = models.CharField(max_length=255, unique=conf.DJANGO_SETTINGS_UNIQUE_NAMES)
 

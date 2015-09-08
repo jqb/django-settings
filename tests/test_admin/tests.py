@@ -44,8 +44,8 @@ class DjangoSettingsAdminTest(DBTestCase):
         def set_all_data():
             for type_name, name, value in data:
                 django_settings.set(type_name, name, value)
-
-        self.assert_queries_count(len(data) * 4, set_all_data)
+        query_count = 4 if django.VERSION < (1, 6) else 6
+        self.assert_queries_count(len(data) * query_count, set_all_data)
         # end
 
         # run request and check number of quesries

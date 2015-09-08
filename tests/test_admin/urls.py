@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls.defaults import patterns, include
+import django
+if django.VERSION < (1, 6):
+    from django.conf.urls.defaults import patterns, include
+else:
+    from django.conf.urls import patterns, include
 from django.contrib import admin
 
 admin.autodiscover()
