@@ -9,11 +9,12 @@ register = template.Library()
 class ContextNode(template.base.TextNode):
     def __init__(self, s, var_name):
         super(ContextNode, self).__init__(s)
+        self.obj = s
         self.var_name = var_name
 
     def render(self, context):
         if self.var_name:
-            context[self.var_name] = self.s
+            context[self.var_name] = self.obj
             return ''
         return super(ContextNode, self).render(context)
 
