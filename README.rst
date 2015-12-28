@@ -147,12 +147,30 @@ in your project settings:
 
    DJANGO_SETTINGS_TIMEOUT = 60 * 60 * 10  # 10 hours
 
-
 Timeout let's you define cache timeout (in sec.) for each of the
 settings. After the given time values gets expired and each of them
 will be recalculated (at the moment you ask for the given
 setting). Introduced due to django's defaults cache timeout (5 min):
 https://docs.djangoproject.com/en/dev/topics/cache/#cache-arguments
+
+If you want to override the cache key maker tell it in the settings:
+
+.. code-block:: python
+
+   DJANGO_SETTINGS_CACHE_KEYMAKER = 'myapp.django_settings_keymaker.TenantKeyMaker'
+
+And inherit from the default keymaker. (Example is for django-tenant-schemas based application)
+
+.. code-block:: python
+
+   from django.db import connection
+   from django_settings.keymaker import KeyMaker
+
+   class TenantKeyMaker(KeyMaker):
+       def make(self, method_name, args, kwargs):
+           key = super().make(method_name, args, kwargs)
+           key = connection.get_schema()+":"+key
+           return key
 
 
 Settings types
@@ -165,7 +183,6 @@ Admin
 -----
 
 You can manipulate setting via your admin interface.
-
 
 Changelog
 ---------

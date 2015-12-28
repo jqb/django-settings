@@ -9,49 +9,25 @@ a set of tools that makes method caching a little more flexible that simple
 XXX: the whole mechanism should be fixed as now it's too complicated to explain
 """
 from .lazyimport import lazyimport
+import importlib
 
 django = lazyimport({
     'settings': 'django.conf',
 })
 config = lazyimport({
     'DJANGO_SETTINGS_TIMEOUT': 'django_settings.conf',
+    'DJANGO_SETTINGS_CACHE_KEYMAKER': 'django_settings.conf'
 })
-
-
-class KeyMaker(object):
-    def __init__(self, prefix):
-        self.prefix = prefix
-
-    def convert(self, arg):
-        if isinstance(arg, unicode):
-            return arg.encode(django.settings.DEFAULT_CHARSET)
-        else:
-            return str(arg)
-
-    def args_to_key(self, args):
-        return ":".join(map(self.convert, args))
-
-    def kwargs_to_key(self, kwargs):
-        return ":".join([
-            "%s:%s" % (self.convert(k), self.convert(v))
-            for k, v in kwargs.items()
-        ])
-
-    def make(self, method_name, args, kwargs):
-        key = ":".join((
-            self.prefix,
-            method_name,
-            self.args_to_key(args),
-            self.kwargs_to_key(kwargs),
-        ))
-        return key
-
 
 class MethodProxy(object):
     def __init__(self, instance, method):
         self.instance = instance
         self.method = method  # accually it's NOT bounded s it's a function!
-        self._keymaker = KeyMaker(prefix='django_settings')
+        keymakerklass = config.DJANGO_SETTINGS_CACHE_KEYMAKER
+        if isinstance(keymakerklass, str):
+            module_name, class_name = keymakerklass.rsplit(".", 1)
+            keymakerklass = getattr(importlib.import_module(module_name), class_name)
+        self._keymaker = keymakerklass(prefix='django_settings')
 
         # NOTE: it's proxy, so let's add at least some basic func properties
         self.func_name = self.method.__name__
