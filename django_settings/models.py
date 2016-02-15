@@ -2,10 +2,16 @@
 # framework
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+try:
+    from django.contrib.contenttypes.fields import GenericForeignKey
+except:
+    from django.contrib.contenttypes.generic import GenericForeignKey
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
-from django.db.models.signals import post_syncdb
+try:
+    from django.db.models.signals import post_migrate
+except:
+    from django.db.models.signals import post_syncdb as post_migrate
 
 from .moduleregistry import new_registry
 
@@ -61,7 +67,7 @@ class Setting(models.Model):
 
     setting_type = models.ForeignKey(ContentType)
     setting_id = models.PositiveIntegerField()
-    setting_object = generic.GenericForeignKey('setting_type', 'setting_id')
+    setting_object = GenericForeignKey('setting_type', 'setting_id')
 
     name = models.CharField(max_length=255, unique=conf.DJANGO_SETTINGS_UNIQUE_NAMES)
 
@@ -111,7 +117,7 @@ registry.register(PositiveInteger)
 # end ###################
 
 
-@receiver(post_syncdb)
+@receiver(post_migrate)
 def handle_post_syncdb(sender, **kwargs):
     from django_settings.dataapi import initialize_data
     initialize_data()
