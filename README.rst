@@ -60,7 +60,7 @@ IMPORTANT: changed in version 1.3, old api still works but caching do not work w
 Or in templates
 
 
-.. code-block:: python
+.. code-block:: html+django
 
   {% load settings_tags %}
 
