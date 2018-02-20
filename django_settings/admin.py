@@ -50,7 +50,7 @@ class SettingAdmin(admin.ModelAdmin):
         if obj:
             return obj.setting_object.__class__
         try:
-            typename = request.REQUEST['typename']        # NOTE: both lines might
+            typename = request.GET['typename']        # NOTE: both lines might
             return dataapi.data.model_for_name(typename)  # raise KeyError
         except KeyError:
             raise Http404
