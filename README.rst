@@ -1,6 +1,9 @@
 django-settings
 ===============
 
+Forked from https://github.com/jqb/django-settings to allow use in Django 2.x / Python 3.x
+
+
 Supported versions
 ------------------
 
