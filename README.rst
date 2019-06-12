@@ -1,26 +1,11 @@
 django-settings
 ===============
 
-
-.. image:: https://badge.fury.io/py/django-settings.png
-   :target: https://badge.fury.io/py/django-settings
-
-.. image:: https://api.travis-ci.org/jqb/django-settings.png?branch=master
-   :target: https://travis-ci.org/jqb/django-settings
-
-
-Django reusable application for storing global project settings in database.
-
-By project settings I mean things like admin mail, some default values like
-default_post_limit etc. Values are validated depending their type.
-Begining with ver 1.3 you can register your own settings values.
-
-
 Supported versions
 ------------------
 
-* Python: 2.6, 2.7  (python 2.6 requires importlib)
-* Django: 1.3, 1.4, 1.5
+* Python: 3.6
+* Django: 2.2
 
 
 API

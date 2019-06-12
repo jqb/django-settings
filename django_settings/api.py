@@ -2,7 +2,7 @@
 # Public module API
 from .moduleregistry import RegisterError  # noqa
 from .dataapi import DataAPI, data  # noqa
-from .lazyimport import lazyimport
+
 
 # shortcuts
 get = data.get
@@ -13,6 +13,7 @@ type_names = data.type_names
 
 
 # django settings-dependent parts should be loadded lazily
+from .lazyimport import lazyimport
 db = lazyimport({  # this is also part of public api
     'Model': 'django_settings.models',
     'Setting': 'django_settings.models',
@@ -20,15 +21,6 @@ db = lazyimport({  # this is also part of public api
 })
 
 # expose methods
-
-
-def register(*a, **kw):
-    db.registry.register(*a, **kw)
-
-
-def unregister(*a, **kw):
-    db.registry.unregister(*a, **kw)
-
-
-def unregister_all(*a, **kw):
-    db.registry.unregister_all(*a, **kw)
+register = lambda *a, **kw: db.registry.register(*a, **kw)
+unregister = lambda *a, **kw: db.registry.unregister(*a, **kw)
+unregister_all = lambda *a, **kw: db.registry.unregister_all(*a, **kw)

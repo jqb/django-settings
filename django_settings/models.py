@@ -2,15 +2,13 @@
 # framework
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes import fields
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
-
-from .moduleregistry import new_registry
+from django.db.models.signals import post_migrate
 
 # app local
 from . import conf
-from django.db.models.signals import post_migrate
 
 
 class Model(models.Model):  # Base class for db setting
@@ -59,15 +57,16 @@ class Setting(models.Model):
 
     objects = SettingManager()
 
-    setting_type = models.ForeignKey(ContentType)
+    setting_type = models.ForeignKey(ContentType, on_delete='CASCADE')
     setting_id = models.PositiveIntegerField()
-    setting_object = GenericForeignKey('setting_type', 'setting_id')
+    setting_object = fields.GenericForeignKey('setting_type', 'setting_id')
 
     name = models.CharField(max_length=255, unique=conf.DJANGO_SETTINGS_UNIQUE_NAMES)
 
 
 
 # Extentions #######################################################
+from .moduleregistry import new_registry
 
 # we will extend this module dynamicaly via "settingsmodels" modules
 registry = new_registry(__name__)
