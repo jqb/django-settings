@@ -23,10 +23,7 @@ class KeyMaker(object):
         self.prefix = prefix
 
     def convert(self, arg):
-        if isinstance(arg, unicode):
-            return arg.encode(django.settings.DEFAULT_CHARSET)
-        else:
-            return str(arg)
+        return str(arg)
 
     def args_to_key(self, args):
         return ":".join(map(self.convert, args))
