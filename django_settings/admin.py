@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # framework
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib import admin
 from django.contrib.admin.views import main as admin_views
 from django.utils.translation import ugettext as _
