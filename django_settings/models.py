@@ -2,12 +2,10 @@
 # framework
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes import fields
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
-from django.db.models.signals import post_syncdb
-
-from .moduleregistry import new_registry
+from django.db.models.signals import post_migrate
 
 # app local
 from . import conf
@@ -59,15 +57,16 @@ class Setting(models.Model):
 
     objects = SettingManager()
 
-    setting_type = models.ForeignKey(ContentType)
+    setting_type = models.ForeignKey(ContentType, on_delete='CASCADE')
     setting_id = models.PositiveIntegerField()
-    setting_object = generic.GenericForeignKey('setting_type', 'setting_id')
+    setting_object = fields.GenericForeignKey('setting_type', 'setting_id')
 
     name = models.CharField(max_length=255, unique=conf.DJANGO_SETTINGS_UNIQUE_NAMES)
 
 
 
 # Extentions #######################################################
+from .moduleregistry import new_registry
 
 # we will extend this module dynamicaly via "settingsmodels" modules
 registry = new_registry(__name__)
@@ -111,7 +110,7 @@ registry.register(PositiveInteger)
 # end ###################
 
 
-@receiver(post_syncdb)
+@receiver(post_migrate)
 def handle_post_syncdb(sender, **kwargs):
     from django_settings.dataapi import initialize_data
     initialize_data()

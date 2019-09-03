@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # framework
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib import admin
 from django.contrib.admin.views import main as admin_views
 from django.utils.translation import ugettext as _
@@ -50,7 +50,7 @@ class SettingAdmin(admin.ModelAdmin):
         if obj:
             return obj.setting_object.__class__
         try:
-            typename = request.REQUEST['typename']        # NOTE: both lines might
+            typename = request.GET['typename']        # NOTE: both lines might
             return dataapi.data.model_for_name(typename)  # raise KeyError
         except KeyError:
             raise Http404
@@ -89,7 +89,7 @@ class SettingAdmin(admin.ModelAdmin):
     def response_change(self, request, obj):
         response = super(SettingAdmin, self).response_change(request, obj)
         app_label = obj._meta.app_label
-        module_name = obj._meta.module_name
+        module_name = obj._meta.model_name
 
         if '_addanother' in request.POST:
             url_name = 'admin:%s_%s_add' % (app_label, module_name)
