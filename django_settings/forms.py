@@ -23,7 +23,7 @@ class SettingForm(forms.ModelForm):
             self.fields['value'].initial = getattr(instance.setting_object, 'value', '')
 
     def setting_changed(self, instance):
-        django_settings.DataAPI.setting_changed(instance)
+        # django_settings.DataAPI.setting_changed(instance)
         return instance
 
     def save(self, *args, **kwargs):

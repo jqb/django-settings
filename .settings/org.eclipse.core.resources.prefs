@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
 encoding//django_settings/admin.py=utf-8
 encoding//django_settings/cache.py=utf-8
+encoding//django_settings/dataapi.py=utf-8
+encoding//django_settings/forms.py=utf-8
+encoding//django_settings/templatetags/settings_admin_urls.py=utf-8
